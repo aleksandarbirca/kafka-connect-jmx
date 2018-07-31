@@ -24,7 +24,7 @@ import java.util.Properties;
 
 public class Version {
   private static final Logger LOG = LoggerFactory.getLogger(Version.class);
-  private static final String PATH = "/kafka-connect-jmx.properties";
+  private static final String PATH = "/config/kafka-connect-jmx-version.properties";
   private static String version = "unknown";
 
   static {

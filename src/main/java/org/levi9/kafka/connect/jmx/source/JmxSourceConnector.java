@@ -7,13 +7,12 @@ import org.levi9.kafka.connect.jmx.util.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class JmxSourceConnector extends SourceConnector {
-
 	public static final Logger LOG = LoggerFactory.getLogger(JmxSourceConnector.class);
-
 	private JmxSourceConfig config;
 
 	public JmxSourceConnector(JmxSourceConfig config) {
@@ -25,7 +24,7 @@ public class JmxSourceConnector extends SourceConnector {
 	}
 
 	public void start(Map<String, String> map) {
-
+		this.config = new JmxSourceConfig(map);
 	}
 
 	public Class<? extends Task> taskClass() {
@@ -33,14 +32,16 @@ public class JmxSourceConnector extends SourceConnector {
 	}
 
 	public List<Map<String, String>> taskConfigs(int i) {
-		return null;
+		ArrayList<Map<String, String>> configs = new ArrayList<>(1);
+		configs.add(config.originalsStrings());
+		return configs;
 	}
 
 	public void stop() {
-
+		// Do nothing
 	}
 
 	public ConfigDef config() {
-		return null;
+		return JmxSourceConfig.CONFIG_DEF;
 	}
 }
