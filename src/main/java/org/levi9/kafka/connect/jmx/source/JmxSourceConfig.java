@@ -3,6 +3,8 @@ package org.levi9.kafka.connect.jmx.source;
 import org.apache.kafka.common.config.AbstractConfig;
 import org.apache.kafka.common.config.ConfigDef;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class JmxSourceConfig extends AbstractConfig {
@@ -30,15 +32,17 @@ public class JmxSourceConfig extends AbstractConfig {
 	public static final String JMX_OBJECTS_DEFAULT = "*";
 
 	public static final String JMX_POLL_INTERVAL_MS = "jmx.poll.interval.ms";
-	public static final String JMX_POLL_INTERVAL_MS_DOC = "";
+	public static final String JMX_POLL_INTERVAL_MS_DOC = "JMX polling interval.";
 	public static final Long JMX_POLL_INTERVAL_MS_DEFAULT = 1000L;
+
+	private static final String DELIMITER = ";";
 
 	private String topic;
 	private String host;
 	private String port;
 	private String username;
 	private String password;
-	private String objectNames;
+	private List<String> objectNames;
 	private Long pollInterval;
 
 	public JmxSourceConfig(ConfigDef definition, Map<?, ?> originals, boolean doLog) {
@@ -77,7 +81,7 @@ public class JmxSourceConfig extends AbstractConfig {
 			.define(JMX_POLL_INTERVAL_MS,
 					ConfigDef.Type.LONG,
 					JMX_POLL_INTERVAL_MS_DEFAULT,
-					ConfigDef.Importance.HIGH,
+					ConfigDef.Importance.MEDIUM,
 					JMX_POLL_INTERVAL_MS_DOC);
 
 
@@ -88,16 +92,12 @@ public class JmxSourceConfig extends AbstractConfig {
 		this.port = getString(JMX_PORT);
 		this.username = getString(USERNAME);
 		this.password = getString(PASSWORD);
-		this.objectNames = getString(JMX_OBJECTS);
+		this.objectNames = Arrays.asList(getString(JMX_OBJECTS).split(DELIMITER));
 		this.pollInterval = getLong(JMX_POLL_INTERVAL_MS);
 	}
 
 	public String getTopic() {
 		return topic;
-	}
-
-	public static String getKafkaTopicDefault() {
-		return KAFKA_TOPIC_DEFAULT;
 	}
 
 	public String getHost() {
@@ -116,7 +116,7 @@ public class JmxSourceConfig extends AbstractConfig {
 		return password;
 	}
 
-	public String getObjectNames() {
+	public List<String> getObjectNames() {
 		return objectNames;
 	}
 
