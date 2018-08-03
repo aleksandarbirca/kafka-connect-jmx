@@ -81,11 +81,13 @@ public class JmxSourceTask extends SourceTask {
                     }
                 }
             }
+            Thread.sleep(this.config.getPollingFrequencyMs());
+            return sourceRecords;
         } catch (Exception e) {
             LOG.error("Error while polling for JMX metrics", e);
         }
 
-        return sourceRecords;
+        return null;
     }
 
     public void stop() {
@@ -138,6 +140,8 @@ public class JmxSourceTask extends SourceTask {
 
     private Struct buildRecordValue(JmxMetric metric) {
         Struct value = new Struct(VALUE_SCHEMA)
+                .put(HOST, config.getHost())
+                .put(PORT, config.getPort())
                 .put(METRIC_NAME, metric.getMetricName())
                 .put(METRIC_VALUE, metric.getMetricValue())
                 .put(UPDATED_AT, Date.from(metric.getUpdatedAt()));

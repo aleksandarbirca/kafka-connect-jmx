@@ -31,7 +31,7 @@ public class JmxSourceConfig extends AbstractConfig {
 	public static final String JMX_OBJECTS_DOC = "list of JMX metrics to retrieve, for example java.lang:type=Memory";
 	public static final String JMX_OBJECTS_DEFAULT = "*";
 
-	public static final String JMX_POLL_INTERVAL_MS = "jmx.poll.interval.ms";
+	public static final String JMX_POLLING_FREQUENCY_MS = "jmx.polling.frequency.ms";
 	public static final String JMX_POLL_INTERVAL_MS_DOC = "JMX polling interval.";
 	public static final Long JMX_POLL_INTERVAL_MS_DEFAULT = 1000L;
 
@@ -43,7 +43,7 @@ public class JmxSourceConfig extends AbstractConfig {
 	private String username;
 	private String password;
 	private List<String> objectNames;
-	private Long pollInterval;
+	private Long pollingFrequencyMs;
 
 	public JmxSourceConfig(ConfigDef definition, Map<?, ?> originals, boolean doLog) {
 		super(definition, originals, doLog);
@@ -67,10 +67,12 @@ public class JmxSourceConfig extends AbstractConfig {
 					JMX_PORT_DOC)
 			.define(USERNAME,
 					ConfigDef.Type.STRING,
+					null,
 					ConfigDef.Importance.LOW,
 					USERNAME_DOC)
 			.define(PASSWORD,
 					ConfigDef.Type.STRING,
+					null,
 					ConfigDef.Importance.LOW,
 					PASSWORD_DOC)
 			.define(JMX_OBJECTS,
@@ -78,7 +80,7 @@ public class JmxSourceConfig extends AbstractConfig {
 					JMX_OBJECTS_DEFAULT,
 					ConfigDef.Importance.HIGH,
 					JMX_OBJECTS_DOC)
-			.define(JMX_POLL_INTERVAL_MS,
+			.define(JMX_POLLING_FREQUENCY_MS,
 					ConfigDef.Type.LONG,
 					JMX_POLL_INTERVAL_MS_DEFAULT,
 					ConfigDef.Importance.MEDIUM,
@@ -93,7 +95,7 @@ public class JmxSourceConfig extends AbstractConfig {
 		this.username = getString(USERNAME);
 		this.password = getString(PASSWORD);
 		this.objectNames = Arrays.asList(getString(JMX_OBJECTS).split(DELIMITER));
-		this.pollInterval = getLong(JMX_POLL_INTERVAL_MS);
+		this.pollingFrequencyMs = getLong(JMX_POLLING_FREQUENCY_MS);
 	}
 
 	public String getTopic() {
@@ -120,7 +122,7 @@ public class JmxSourceConfig extends AbstractConfig {
 		return objectNames;
 	}
 
-	public Long getPollInterval() {
-		return pollInterval;
+	public Long getPollingFrequencyMs() {
+		return pollingFrequencyMs;
 	}
 }

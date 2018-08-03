@@ -14,6 +14,7 @@ public class JmxSchemas {
 	public static final String METRIC_VALUE = "metric_value";
 	public static final String UPDATED_AT = "updated_at";
 
+	// TODO: change key schema
 	public static final Schema KEY_SCHEMA = SchemaBuilder.struct().name(SCHEMA_KEY)
 			.version(1)
 			.field(HOST, Schema.STRING_SCHEMA)
@@ -22,6 +23,8 @@ public class JmxSchemas {
 
 	public static final Schema VALUE_SCHEMA = SchemaBuilder.struct().name(SCHEMA_VALUE)
 			.version(1)
+			.field(HOST, Schema.STRING_SCHEMA)
+			.field(PORT, Schema.STRING_SCHEMA)
 			.field(METRIC_NAME, Schema.STRING_SCHEMA)
 			.field(METRIC_VALUE, Schema.STRING_SCHEMA)
 			.field(UPDATED_AT, Timestamp.SCHEMA)
