@@ -32,8 +32,8 @@ public class JmxSourceConfig extends AbstractConfig {
 	public static final String JMX_OBJECTS_DEFAULT = "*";
 
 	public static final String JMX_POLLING_FREQUENCY_MS = "jmx.polling.frequency.ms";
-	public static final String JMX_POLL_INTERVAL_MS_DOC = "JMX polling interval.";
-	public static final Long JMX_POLL_INTERVAL_MS_DEFAULT = 1000L;
+	public static final String JMX_POLLING_FREQUENCY_MS_DOC = "JMX polling interval.";
+	public static final Long JMX_POLLING_FREQUENCY_MS_DEFAULT = 1000L;
 
 	private static final String DELIMITER = ";";
 
@@ -82,9 +82,9 @@ public class JmxSourceConfig extends AbstractConfig {
 					JMX_OBJECTS_DOC)
 			.define(JMX_POLLING_FREQUENCY_MS,
 					ConfigDef.Type.LONG,
-					JMX_POLL_INTERVAL_MS_DEFAULT,
+					JMX_POLLING_FREQUENCY_MS_DEFAULT,
 					ConfigDef.Importance.MEDIUM,
-					JMX_POLL_INTERVAL_MS_DOC);
+					JMX_POLLING_FREQUENCY_MS_DOC);
 
 
 	public JmxSourceConfig(Map<?, ?> properties) {

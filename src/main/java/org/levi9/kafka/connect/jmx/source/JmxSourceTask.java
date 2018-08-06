@@ -37,7 +37,7 @@ public class JmxSourceTask extends SourceTask {
     }
 
     @Override
-    public void start(Map<java.lang.String, java.lang.String> props) {
+    public void start(Map<String, String> props) {
         LOG.info("Starting task");
         this.config = new JmxSourceConfig(props);
 
